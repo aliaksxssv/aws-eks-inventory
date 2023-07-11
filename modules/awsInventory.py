@@ -1,5 +1,30 @@
 import json, socket
 from IPy import IP
+import boto3
+
+class ec2():
+    
+    def __init__(self):
+        self.aws_profile = ''
+        self.report = ''
+
+    def inventory(self):
+        
+        session = boto3.Session(profile_name=self.aws_profile)
+        ec2 = session.client('ec2')
+
+        regions = ec2.describe_regions()
+
+        for region in regions['Regions']:
+            ec2 = session.client('ec2', region_name=region['RegionName'])
+            interfaces = ec2.describe_network_interfaces()
+            for interface in interfaces['NetworkInterfaces']:
+                try:
+                    self.report += interface['Association']['PublicIp']
+                except:
+                    continue
+        
+        return self.report
 
 class eks():
     
