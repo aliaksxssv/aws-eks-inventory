@@ -1,5 +1,5 @@
 import sys, getopt
-from modules import awsInventory
+from modules import awsInventory, logger
 
 
 def main(argv):
@@ -13,7 +13,7 @@ def main(argv):
     try:
         opts, args = getopt.getopt(argv, short_opts, long_opts)
     except getopt.error as err:
-        print (str(err))
+        logger.write(str(err), 'debug')
         sys.exit()
 
     for option, value in opts:
