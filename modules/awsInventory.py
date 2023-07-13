@@ -5,11 +5,11 @@ import boto3
 class ec2():
     
     def __init__(self):
-        self.aws_profile = ''
         self.report = ''
+        self.aws_profile = ''
 
     def inventory(self):
-        
+
         session = boto3.Session(profile_name=self.aws_profile)
         ec2 = session.client('ec2')
 
